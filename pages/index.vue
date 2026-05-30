@@ -319,7 +319,7 @@ function restart() {
 
 }
 
-function submitLead(
+async function submitLead(
   payload: {
     firstname: string
     email: string
@@ -328,15 +328,41 @@ function submitLead(
   }
 ) {
 
-  console.log(
-    'Lead reçu',
-    payload
-  )
+  try {
 
-  console.log(
-    'Réponses',
-    answers.value
-  )
+    const supabase = useSupabase()
+
+    const { error } =
+      await (supabase as any)
+        .from('positioning_audits')
+        .insert([
+          {
+            firstname: payload.firstname,
+            email: payload.email,
+            company: payload.company,
+            website: payload.website,
+            score: score.value,
+            answers: answers.value
+          }
+        ])
+
+    if (error)
+      throw error
+
+    return true
+
+  }
+
+  catch (error) {
+
+    console.error(
+      'Erreur lors de la création du diagnostic :',
+      error
+    )
+
+    return false
+
+  }
 
 }
 
