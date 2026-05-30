@@ -4,11 +4,13 @@ let client: ReturnType<typeof createClient> | null = null
 
 export const useSupabase = () => {
 
-  if(client)
+  if (client)
     return client
 
-  const config =
-    useRuntimeConfig()
+  const config = useRuntimeConfig()
+
+  console.log('URL:', config.public.supabaseUrl)
+  console.log('KEY:', config.public.supabaseKey)
 
   client = createClient(
     config.public.supabaseUrl,
