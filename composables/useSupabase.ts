@@ -9,8 +9,7 @@ export const useSupabase = () => {
 
   const config = useRuntimeConfig()
 
-  console.log('URL:', config.public.supabaseUrl)
-  console.log('KEY:', config.public.supabaseKey)
+
 
   client = createClient(
     config.public.supabaseUrl,
